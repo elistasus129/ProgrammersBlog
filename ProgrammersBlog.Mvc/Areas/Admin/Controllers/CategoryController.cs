@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.Dtos;
@@ -22,6 +23,12 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             _categoryService = categoryService;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var result = await _categoryService.GetAll();
+            return View(result.Data);
+
+        }
         [HttpGet]
         public IActionResult Add()
         {
@@ -32,7 +39,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.Add(categoryAddDto, "Mert Ramazanoglu");
+                var result = await _categoryService.Add(categoryAddDto, "Mert Ramazanoğlu");
                 if (result.ResultStatus == ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
@@ -49,6 +56,16 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             });
             return Json(categoryAddAjaxErrorModel);
 
+        }
+
+        public async Task<JsonResult> GetAllCategories()
+        {
+            var result = await _categoryService.GetAll();
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+            return Json(categories);
         }
     }
 }

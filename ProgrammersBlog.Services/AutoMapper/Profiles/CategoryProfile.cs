@@ -9,7 +9,7 @@ using ProgrammersBlog.Entities.Dtos;
 
 namespace ProgrammersBlog.Services.AutoMapper.Profiles
 {
-    public class CategoryProfile:Profile
+    public class CategoryProfile : Profile
     {
         public CategoryProfile()
         {
@@ -17,6 +17,7 @@ namespace ProgrammersBlog.Services.AutoMapper.Profiles
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(x => DateTime.Now));
             CreateMap<CategoryUpdateDto, Category>()
                 .ForMember(dest => dest.ModifiedDate, opt => opt.MapFrom(x => DateTime.Now));
+            CreateMap<Category, CategoryUpdateDto>();
         }
     }
 }

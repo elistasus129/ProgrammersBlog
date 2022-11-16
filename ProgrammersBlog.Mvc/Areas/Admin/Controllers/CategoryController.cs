@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.Mvc.Areas.Admin.Models;
@@ -14,6 +15,7 @@ using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -40,7 +42,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _categoryService.Add(categoryAddDto, "Mert Ramazanoglu");
-                if (result.ResultStatus == ResultStatus.Success)
+                if (result.ResultStatus==ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
@@ -61,9 +63,9 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         public async Task<IActionResult> Update(int categoryId)
         {
             var result = await _categoryService.GetCategoryUpdateDto(categoryId);
-            if (result.ResultStatus == ResultStatus.Success)
+            if (result.ResultStatus==ResultStatus.Success)
             {
-                return PartialView("_CategoryUpdatePartial", result.Data);
+                return PartialView("_CategoryUpdatePartial",result.Data);
             }
             else
             {

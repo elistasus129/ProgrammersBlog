@@ -8,6 +8,7 @@ using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
 using ProgrammersBlog.Services.Abstract;
+using ProgrammersBlog.Services.Utilities;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
 using ProgrammersBlog.Shared.Utilities.Results.Concrete;
@@ -25,7 +26,7 @@ namespace ProgrammersBlog.Services.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IDataResult<ArticleDto>> Get(int articleId)
+        public async Task<IDataResult<ArticleDto>> GetAsync(int articleId)
         {
             var article = await _unitOfWork.Articles.GetAsync(a => a.Id == articleId,a=>a.User,a=>a.Category);
             if (article!=null)
@@ -36,10 +37,10 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Success
                 });
             }
-            return new DataResult<ArticleDto>(ResultStatus.Error,"Böyle bir makale bulunamadı.",null);
+            return new DataResult<ArticleDto>(ResultStatus.Error,Messages.Article.NotFound(isPlural:false),null);
         }
 
-        public async Task<IDataResult<ArticleListDto>> GetAll()
+        public async Task<IDataResult<ArticleListDto>> GetAllAsync()
         {
             var articles = await _unitOfWork.Articles.GetAllAsync(null, a => a.User, a => a.Category);
             if (articles.Count>-1)
@@ -50,10 +51,10 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Success
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Makaleler bulunamadı.", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
         }
 
-        public async Task<IDataResult<ArticleListDto>> GetAllByNonDeleted()
+        public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAsync()
         {
             var articles = await _unitOfWork.Articles.GetAllAsync(a => !a.IsDeleted, ar => ar.User, ar => ar.Category);
             if (articles.Count > -1)
@@ -64,10 +65,10 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Success
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Makaleler bulunamadı.", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
         }
 
-        public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActive()
+        public async Task<IDataResult<ArticleListDto>> GetAllByNonDeletedAndActiveAsync()
         {
             var articles =
                 await _unitOfWork.Articles.GetAllAsync(a => !a.IsDeleted && a.IsActive, ar => ar.User,
@@ -80,10 +81,10 @@ namespace ProgrammersBlog.Services.Concrete
                     ResultStatus = ResultStatus.Success
                 });
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Makaleler bulunamadı.", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
         }
 
-        public async Task<IDataResult<ArticleListDto>> GetAllByCategory(int categoryId)
+        public async Task<IDataResult<ArticleListDto>> GetAllByCategoryAsync(int categoryId)
         {
             var result = await _unitOfWork.Categories.AnyAsync(c => c.Id == categoryId);
             if (result)
@@ -98,31 +99,33 @@ namespace ProgrammersBlog.Services.Concrete
                         ResultStatus = ResultStatus.Success
                     });
                 }
-                return new DataResult<ArticleListDto>(ResultStatus.Error, "Makaleler bulunamadı.", null);
+                return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Article.NotFound(isPlural: true), null);
             }
-            return new DataResult<ArticleListDto>(ResultStatus.Error, "Böyle bir kategori bulunamadı.", null);
+            return new DataResult<ArticleListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural:false), null);
 
         }
 
-        public async Task<IResult> Add(ArticleAddDto articleAddDto, string createdByName)
+        public async Task<IResult> AddAsync(ArticleAddDto articleAddDto, string createdByName)
         {
             var article = _mapper.Map<Article>(articleAddDto);
             article.CreatedByName = createdByName;
             article.ModifiedByName = createdByName;
             article.UserId = 1;
-            await _unitOfWork.Articles.AddAsync(article).ContinueWith(t=>_unitOfWork.SaveAsync());
-            return new Result(ResultStatus.Success,$"{articleAddDto.Title} başlıklı makale başarıyla eklenmiştir.");
+            await _unitOfWork.Articles.AddAsync(article);
+            await _unitOfWork.SaveAsync();
+            return new Result(ResultStatus.Success,Messages.Article.Add(article.Title));
         }
 
-        public async Task<IResult> Update(ArticleUpdateDto articleUpdateDto, string modifiedByName)
+        public async Task<IResult> UpdateAsync(ArticleUpdateDto articleUpdateDto, string modifiedByName)
         {
             var article = _mapper.Map<Article>(articleUpdateDto);
             article.ModifiedByName = modifiedByName;
-            await _unitOfWork.Articles.UpdateAsync(article).ContinueWith(t=>_unitOfWork.SaveAsync());
-            return new Result(ResultStatus.Success, $"{articleUpdateDto.Title} başlıklı makale başarıyla güncellenmiştir.");
+            await _unitOfWork.Articles.UpdateAsync(article);
+            await _unitOfWork.SaveAsync();
+            return new Result(ResultStatus.Success, Messages.Article.Update(article.Title));
         }
 
-        public async Task<IResult> Delete(int articleId, string modifiedByName)
+        public async Task<IResult> DeleteAsync(int articleId, string modifiedByName)
         {
             var result = await _unitOfWork.Articles.AnyAsync(a => a.Id == articleId);
             if (result)
@@ -131,22 +134,50 @@ namespace ProgrammersBlog.Services.Concrete
                 article.IsDeleted = true;
                 article.ModifiedByName = modifiedByName;
                 article.ModifiedDate=DateTime.Now;
-                await _unitOfWork.Articles.UpdateAsync(article).ContinueWith(t=>_unitOfWork.SaveAsync());
-                return new Result(ResultStatus.Success, $"{article.Title} başlıklı makale başarıyla silinmiştir.");
+                await _unitOfWork.Articles.UpdateAsync(article);
+                await _unitOfWork.SaveAsync();
+                return new Result(ResultStatus.Success, Messages.Article.Delete(article.Title));
             }
-            return new Result(ResultStatus.Error,"Böyle bir makale bulunamadı.");
+            return new Result(ResultStatus.Error,Messages.Article.NotFound(isPlural:false));
         }
 
-        public async Task<IResult> HardDelete(int articleId)
+        public async Task<IResult> HardDeleteAsync(int articleId)
         {
             var result = await _unitOfWork.Articles.AnyAsync(a => a.Id == articleId);
             if (result)
             {
                 var article = await _unitOfWork.Articles.GetAsync(a => a.Id == articleId);
-                await _unitOfWork.Articles.DeleteAsync(article).ContinueWith(t => _unitOfWork.SaveAsync());
-                return new Result(ResultStatus.Success, $"{article.Title} başlıklı makale başarıyla veritabanından silinmiştir.");
+                await _unitOfWork.Articles.DeleteAsync(article);
+                await _unitOfWork.SaveAsync();
+                return new Result(ResultStatus.Success, Messages.Article.HardDelete(article.Title));
             }
-            return new Result(ResultStatus.Error, "Böyle bir makale bulunamadı.");
+            return new Result(ResultStatus.Error, Messages.Article.NotFound(isPlural:false));
+        }
+
+        public async Task<IDataResult<int>> CountAsync()
+        {
+            var articlesCount = await _unitOfWork.Articles.CountAsync();
+            if (articlesCount > -1)
+            {
+                return new DataResult<int>(ResultStatus.Success, articlesCount);
+            }
+            else
+            {
+                return new DataResult<int>(ResultStatus.Error, $"Beklenmeyen bir hata ile karşılaşıldı.", -1);
+            }
+        }
+
+        public async Task<IDataResult<int>> CountByNonDeletedAsync()
+        {
+            var articlesCount = await _unitOfWork.Articles.CountAsync(a=>!a.IsDeleted);
+            if (articlesCount > -1)
+            {
+                return new DataResult<int>(ResultStatus.Success, articlesCount);
+            }
+            else
+            {
+                return new DataResult<int>(ResultStatus.Error, $"Beklenmeyen bir hata ile karşılaşıldı.", -1);
+            }
         }
     }
 }

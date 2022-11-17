@@ -9,7 +9,7 @@ using ProgrammersBlog.Entities.Dtos;
 
 namespace ProgrammersBlog.Services.AutoMapper.Profiles
 {
-    public class CategoryProfile : Profile
+    public class CategoryProfile:Profile
     {
         public CategoryProfile()
         {

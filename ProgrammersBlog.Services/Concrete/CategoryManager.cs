@@ -115,7 +115,7 @@ namespace ProgrammersBlog.Services.Concrete
                 });
             }
             return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
-        }        
+        }
 
         /// <summary>
         /// Verilen CategoryAddDto ve CreatedByName parametrelerine ait bilgiler ile yeni bir Category ekler.

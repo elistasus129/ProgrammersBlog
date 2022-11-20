@@ -26,9 +26,13 @@
   <ItemGroup>
     <None Include="Areas\Admin\Views\Article\Add.cshtml" />
     <None Include="Areas\Admin\Views\Article\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Article\Update.cshtml" />
     <None Include="Areas\Admin\Views\Category\Index.cshtml" />
     <None Include="Areas\Admin\Views\Category\_CategoryAddPartial.cshtml" />
     <None Include="Areas\Admin\Views\Category\_CategoryUpdatePartial.cshtml" />
+    <None Include="Areas\Admin\Views\Comment\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Comment\_CommentDetailPartial.cshtml" />
+    <None Include="Areas\Admin\Views\Comment\_CommentUpdatePartial.cshtml" />
     <None Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Areas\Admin\Views\Shared\Components\AdminMenu\Default.cshtml" />
     <None Include="Areas\Admin\Views\Shared\Components\UserMenu\Default.cshtml" />
@@ -54,6 +58,7 @@
     <None Include="wwwroot\AdminLTE\js\articleAdd.js" />
     <None Include="wwwroot\AdminLTE\js\articleIndex.js" />
     <None Include="wwwroot\AdminLTE\js\categoryIndex.js" />
+    <None Include="wwwroot\AdminLTE\js\commentIndex.js" />
     <None Include="wwwroot\AdminLTE\js\homeIndex.js" />
     <None Include="wwwroot\AdminLTE\js\scripts.js" />
     <None Include="wwwroot\AdminLTE\js\site.js" />

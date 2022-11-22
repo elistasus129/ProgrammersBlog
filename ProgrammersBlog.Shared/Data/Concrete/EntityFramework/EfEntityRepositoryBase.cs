@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Shared.Data.Abstract;
 using ProgrammersBlog.Shared.Entities.Abstract;
@@ -30,10 +31,15 @@ namespace ProgrammersBlog.Shared.Data.Concrete.EntityFramework
             IQueryable<TEntity> query = _context.Set<TEntity>();
             if (predicates.Any())
             {
+                var predicateChain = PredicateBuilder.New<TEntity>();
                 foreach (var predicate in predicates)
                 {
-                    query = query.Where(predicate);
+                    // predicate1 && predicate2 && predicate3 && predicateN
+                    // predicate1 || predicate2 || predicate3 || predicateN
+                    predicateChain.Or(predicate);
                 }
+
+                query = query.Where(predicateChain);
             }
 
             if (includeProperties.Any())

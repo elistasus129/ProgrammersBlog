@@ -56,6 +56,7 @@
     <None Include="Areas\Admin\_ViewImports.cshtml" />
     <None Include="Areas\Admin\_ViewStart.cshtml" />
     <None Include="Views\Article\Detail.cshtml" />
+    <None Include="Views\Article\Search.cshtml" />
     <None Include="Views\Home\ComingSoonIndex.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Shared\Components\RightSideBar\Default.cshtml" />

@@ -57,13 +57,19 @@
     <None Include="Areas\Admin\_ViewStart.cshtml" />
     <None Include="Views\Article\Detail.cshtml" />
     <None Include="Views\Article\Search.cshtml" />
+    <None Include="Views\Article\_ArticleDetailRightSideBarPartial.cshtml" />
     <None Include="Views\Comment\_CommentAddPartial.cshtml" />
+    <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Home\ComingSoonIndex.cshtml" />
+    <None Include="Views\Home\Contact.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Shared\Components\RightSideBar\Default.cshtml" />
+    <None Include="Views\Shared\_AboutLayout.cshtml" />
     <None Include="Views\Shared\_ArticleLayout.cshtml" />
     <None Include="Views\Shared\_ComingSoonLayout.cshtml" />
+    <None Include="Views\Shared\_ContactLayout.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_MainMenuPartial.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
     <None Include="wwwroot\AdminLTE\assets\demo\chart-area-demo.js" />
@@ -84,6 +90,7 @@
     <None Include="wwwroot\AdminLTE\js\scripts.js" />
     <None Include="wwwroot\AdminLTE\js\site.js" />
     <None Include="wwwroot\AdminLTE\js\userIndex.js" />
+    <None Include="wwwroot\BlogHome\js\articleDetail.js" />
     <None Include="wwwroot\BlogHome\vendor\bootstrap\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\BlogHome\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
     <None Include="wwwroot\BlogHome\vendor\bootstrap\css\bootstrap-reboot.css.map" />

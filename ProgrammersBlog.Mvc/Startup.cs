@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Mvc.AutoMapper.Profiles;
+using ProgrammersBlog.Mvc.Filters;
 using ProgrammersBlog.Mvc.Helpers.Abstract;
 using ProgrammersBlog.Mvc.Helpers.Concrete;
 
@@ -27,9 +28,11 @@ namespace ProgrammersBlog.Mvc
         {
             services.Configure<AboutUsPageInfo>(Configuration.GetSection("AboutUsPageInfo"));
             services.Configure<WebsiteInfo>(Configuration.GetSection("WebsiteInfo"));
+            services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.AddControllersWithViews(options =>
             {
                 options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(value => "Bu alan boþ geçilmemelidir.");
+                options.Filters.Add<MvcExceptionFilter>();
             }).AddRazorRuntimeCompilation().AddJsonOptions(opt =>
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

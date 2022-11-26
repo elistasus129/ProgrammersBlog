@@ -63,3 +63,8 @@ Select2
 Bootstrap 4.5 Tema Giydirme İşlemleri
 
 ![UC-7ba129c2-3d0d-420e-847b-7fd2f71cb64a](https://user-images.githubusercontent.com/61631884/203879948-4950d633-999f-4e1e-abc4-0b646d4d1ad9.jpg)
+
+![2](https://user-images.githubusercontent.com/61631884/204101348-9022e1d0-e6dd-423d-910a-c9e6bd6af3cc.jpg)
+
+
+

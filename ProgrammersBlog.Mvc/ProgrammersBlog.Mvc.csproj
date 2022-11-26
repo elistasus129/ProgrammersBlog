@@ -39,6 +39,7 @@
     <None Include="Areas\Admin\Views\Comment\_CommentUpdatePartial.cshtml" />
     <None Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Areas\Admin\Views\Options\About.cshtml" />
+    <None Include="Areas\Admin\Views\Options\ArticleRightSideBarWidgetSettings.cshtml" />
     <None Include="Areas\Admin\Views\Options\EmailSettings.cshtml" />
     <None Include="Areas\Admin\Views\Options\GeneralSettings.cshtml" />
     <None Include="Areas\Admin\Views\Role\Index.cshtml" />
@@ -87,6 +88,7 @@
     <None Include="wwwroot\AdminLTE\assets\img\error-404-monochrome.svg" />
     <None Include="wwwroot\AdminLTE\js\articleAdd.js" />
     <None Include="wwwroot\AdminLTE\js\articleIndex.js" />
+    <None Include="wwwroot\AdminLTE\js\articleRightSideBarWidgetSettings.js" />
     <None Include="wwwroot\AdminLTE\js\categoryIndex-HTML.js" />
     <None Include="wwwroot\AdminLTE\js\categoryIndex.js" />
     <None Include="wwwroot\AdminLTE\js\commentIndex.js" />

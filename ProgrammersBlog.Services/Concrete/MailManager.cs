@@ -52,7 +52,7 @@ namespace ProgrammersBlog.Services.Concrete
             MailMessage message = new MailMessage
             {
                 From = new MailAddress(_smtpSettings.SenderEmail), // Ahmet Yılmaz ahmetyilmaz@gmail.com // Blog Uygulamanıza Yeni Bir İçerik Önerisi
-                To = { new MailAddress("ramazanoglumert@gmail.com")}, //info@programmersblog.com
+                To = { new MailAddress("altudev02@gmail.com")}, //info@programmersblog.com
                 Subject = emailSendDto.Subject,
                 IsBodyHtml = true,
                 Body = $"Gönderen Kişi: {emailSendDto.Name}, Gönderen E-Posta Adresi:{emailSendDto.Email}<br/>{emailSendDto.Message}"

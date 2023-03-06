@@ -4,7 +4,7 @@ N Katmanlı Mimari
 
 Entity Framework Core 6.0 ile Code First Yaklaşımı
 
-Fluent API ile Detaylı Veritabanı Yapılandırması
+
 
 Generic Repository Tasarım Deseni
 

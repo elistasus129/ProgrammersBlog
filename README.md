@@ -66,9 +66,7 @@ Bootstrap 4.5 Tema Giydirme İşlemleri
 
 ![2](https://user-images.githubusercontent.com/61631884/204101348-9022e1d0-e6dd-423d-910a-c9e6bd6af3cc.jpg)
 
-Udemy Kursları Linkleri:
-1. Video Eğitim Serisi:https://www.udemy.com/course/net5aspnetcore5blog/
-2. Video Eğitim Serisi 2:https://www.udemy.com/course/net5aspnetcore5blog2/
+
 
 Udemy kurslarını tamamlayarak bu sertifikaları udemy üzerinde Alper Tunga eğitmeni sayasinde kazanmış  oldum
 
